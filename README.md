@@ -15,6 +15,15 @@ under your configurations control. In the terraform AWS provider a common data l
 region. These can then be used in things like IAM policy documents to restrict access or control. Or sometimes in 
 resources like S3 buckets to ensure your bucket is a unique name. 
 
+## TLDR
+The above is an example of a scenario that caught me out. I had always thought that data lookups were run in the plan 
+phase and that they would not be affected by the order of modules. However, this is documented by Hashicorp in the 
+[depends_on meta-argument](https://developer.hashicorp.com/terraform/language/meta-arguments/depends_on#processing-and-planning-consequences)
+and in the [data Sources Block](https://developer.hashicorp.com/terraform/language/data-sources#data-resource-behavior). 
+Lookups can be delayed for a number of reasons and not be able to be run until the apply phase.
+
+Try to avoid data lookups in modules and instead rely on the caller to pass in the data as variables.
+
 ## Data lookups in isolation
 Generally speaking data lookups will happen in the plan phase. This is when terraform is evaluating the configuration
 and can be used to get information that will act as input to other resources.
@@ -90,12 +99,6 @@ This includes its data lookups. Since the data lookup cannot be run in the modul
 changes are applied Terraform cannot know that the bucket config is the same at the plan phase.
 
 ## Conclusion
-The above is an example of a scenario that caught me out in actual module code i wrote in the past. I had always thought
-that data lookups were run in the plan phase and that they would not be affected by the order of modules. However, this
-is documented by Hashicorp in the 
-[depends_on meta-argument](https://developer.hashicorp.com/terraform/language/meta-arguments/depends_on#processing-and-planning-consequences)
-and in the [data Sources Block](https://developer.hashicorp.com/terraform/language/data-sources#data-resource-behavior). 
-Lookups can be delayed for a number of reasons and not be able to be run until the apply phase.
 
 In summary, we don't know how people might use the modules we create. While we might build and test our modules in 
 isolation, and run all sorts of testing with tools like terratest, we cannot predict how others will use our modules. We 
