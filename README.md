@@ -106,4 +106,3 @@ should try to avoid using data lookups in modules directly and instead leave tha
 module. Our module will be cleaner if we just asked the caller to pass us the region and account id, or even in this 
 case the bucket name. That way the caller can obtain that data from any source and our module will not be specifically 
 tied to data lookups.
-
