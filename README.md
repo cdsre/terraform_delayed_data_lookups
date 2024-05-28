@@ -32,7 +32,7 @@ When we run this configuration it creates us a new bucket using the account Id a
 ```bash
 Plan: 1 to add, 0 to change, 0 to destroy.
 aws_s3_bucket.couchbase_backup: Creating...
-aws_s3_bucket.couchbase_backup: Creation complete after 1s [id=test-123456789123-eu-west-2-couchbase-backups]
+aws_s3_bucket.couchbase_backup: Creation complete after 1s [id=test-123456789123-eu-west-2-my-bucket]
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
@@ -75,9 +75,9 @@ destroy and recreate our bucket, Even though our bucket object configuration has
 -/+ resource "aws_s3_bucket" "couchbase_backup" {
       + acceleration_status         = (known after apply)
       + acl                         = (known after apply)
-      ~ arn                         = "arn:aws:s3:::test-439269403821-eu-west-2-couchbase-backups" -> (known after apply)
-      ~ bucket                      = "test-439269403821-eu-west-2-couchbase-backups" # forces replacement -> (known after apply) # forces replacement
-      ~ bucket_domain_name          = "test-439269403821-eu-west-2-couchbase-backups.s3.amazonaws.com" -> (known after apply)
+      ~ arn                         = "arn:aws:s3:::test-123456789123-eu-west-2-my-bucket" -> (known after apply)
+      ~ bucket                      = "test-123456789123-eu-west-2-my-bucket" # forces replacement -> (known after apply) # forces replacement
+      ~ bucket_domain_name          = "test-123456789123-eu-west-2-my-bucket.s3.amazonaws.com" -> (known after apply)
       + bucket_prefix               = (known after apply)
 ```
 
