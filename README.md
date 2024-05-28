@@ -22,7 +22,7 @@ and can be used to get information that will act as input to other resources.
 ```hcl
 data "aws_caller_identity" "this" {}
 data "aws_region" "this" {}
-resource "aws_s3_bucket" "couchbase_backup" {
+resource "aws_s3_bucket" "my_bucket" {
   bucket        = "my-unique-bucket-${data.aws_caller_identity.this.account_id}-${data.aws_region.this.id}"
 }
 ```
@@ -31,8 +31,8 @@ When we run this configuration it creates us a new bucket using the account Id a
 
 ```bash
 Plan: 1 to add, 0 to change, 0 to destroy.
-aws_s3_bucket.couchbase_backup: Creating...
-aws_s3_bucket.couchbase_backup: Creation complete after 1s [id=test-123456789123-eu-west-2-my-bucket]
+aws_s3_bucket.my_bucket: Creating...
+aws_s3_bucket.my_bucket: Creation complete after 1s [id=test-123456789123-eu-west-2-my-bucket]
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
@@ -71,8 +71,8 @@ We then make a change to the `some_other_module` and run terraform again. This t
 destroy and recreate our bucket, Even though our bucket object configuration has not changed. 
 
 ```bash
-  # module.buckets.aws_s3_bucket.couchbase_backup must be replaced
--/+ resource "aws_s3_bucket" "couchbase_backup" {
+  # module.buckets.aws_s3_bucket.my_bucket must be replaced
+-/+ resource "aws_s3_bucket" "my_bucket" {
       + acceleration_status         = (known after apply)
       + acl                         = (known after apply)
       ~ arn                         = "arn:aws:s3:::test-123456789123-eu-west-2-my-bucket" -> (known after apply)
